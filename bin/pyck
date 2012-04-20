@@ -1,0 +1,9 @@
+#!/usr/bin/python
+
+import sys
+import os
+
+from pyck import pyck
+
+if __name__ == "__main__":
+   print(dir(pyck))
