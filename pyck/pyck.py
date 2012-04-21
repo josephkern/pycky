@@ -12,7 +12,6 @@ Usage:
 
 Written by Joseph Kern, 2011
 
-TODO: Make a proper package (as a python executable)
 TODO: Refactor based on best practices etc.
 TODO: Upload to github
 TODO: Upload to pypi
@@ -32,6 +31,10 @@ import sys
 import ast
 import _ast
 
+# pyck library usage:
+# from pyck import pyck
+# MyPy = pyck(input)
+# MyPy.Imports.test()
 
 def getAST(filename):
     """Arguments: filename: path to the file to be checked.
@@ -72,15 +75,14 @@ def testImport(module_list):
 
     According to pydoc there are implicit *finders* for import"""
 
-    module_check = {}
-    # This would be better served as {True: [], False: []}
+    module_check = {True: [], False: []}
     for module in module_list:
-        if not module_check[module]:
+        if module not in module_check[True] or module_check[False]:
             try:
                 exec "import " + module
-                module_check[module] = true
+                module_check[True].append(module)
             except ImportError:
-                module_check[module] = false
+                module_check[False].append(module)
         else:
             continue
     return module_check
@@ -93,8 +95,9 @@ def testImport(module_list):
 def main():
     data = getAST(sys.argv[1])
     imports = filterAST(data)
+    true_false = testImport(getModuleNames(imports))
     print("\n".join(getModuleNames(imports)))
-    #testImport
+    print(true_false[True], true_false[False])
 
 if __name__ == "__main__":
     main()
