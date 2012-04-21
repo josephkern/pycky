@@ -12,14 +12,14 @@ def read(fname):
 
 setup(
     name = "pyck",
-    version = "0.0.1",
+    version = "0.1.0",
     author = "Joseph Kern",
     author_email = "jkern@semafour.net",
     description = ("Search for python module dependencies using the "
                                    "Abstract Source Tree (AST)"),
     license = "BSD",
     keywords = "AST analysis developer",
-    url = "http://packages.python.org/an_example_pypi_project",
+    url = "http://packages.python.org/pyck",
     packages=['pyck', 'tests'],
     long_description=read('README'),
     classifiers=[

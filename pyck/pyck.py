@@ -1,4 +1,4 @@
-#!/usr/bin/python
+#!/usr/bin/env python
 """Determines the dependencies of a python corpus using the internal
 AST(Abstract Source Tree) reference.
 
@@ -12,10 +12,8 @@ Usage:
 
 Written by Joseph Kern, 2011
 
-TODO: Refactor based on best practices etc.
 TODO: Upload to github
 TODO: Upload to pypi
-TODO: Make a landing page on code.semafour.net/pyck
 
 TODO: Add flag for --no-search
 TODO: Add try; except for internetaccess
@@ -31,73 +29,50 @@ import sys
 import ast
 import _ast
 
-# pyck library usage:
-# from pyck import pyck
-# MyPy = pyck(input)
-# MyPy.Imports.test()
+class Pyck(object):
+    def __init__ (self,filename):
+        self.filename = filename
+        self.AST = None # AST Generator Placeholder
+        self.ModuleNames = [ ]
+        self.ImportTest = {True: [], False: []}
 
-def getAST(filename):
-    """Arguments: filename: path to the file to be checked.
-    Returns an ast generator of the supplied file."""
+    def Parse(self):
+        try:
+            input_file = open(self.filename, 'r')
+            python_file = input_file.read()
 
-    try:
-        infile = open(filename, 'r')
-        python_file = infile.read()
+        except IOError:
+            print("Problem opening the file {0} ...").format(filename)
+            sys.exit(1)
 
-    except IOError:
-        print("Problem opening the file {0} ...").format(filename)
+        else:
+            self.AST = ast.parse(python_file)
 
-    else:
-        return ast.parse(python_file)
+    def Filter(self,ast_object=_ast.Import):
+        for element in ast.walk(self.AST):
+            if element.__class__ == ast_object:
+                for name in element.names:
+                    self.ModuleNames.append(name.name)
+                    # This currently will append the import element
+                    # name as a str.
 
-def filterAST(ast_generator, ast_object=_ast.Import):
-    """Expects a generator or sequence of _ast objects. Will return a
-    list of all objects of the class defined with ast_object"""
+    def Test(self):
+        """Tries to import modules (via exec()), returns a dictionary of
+        values; k,v = {<module_name>: <boolean>}
+        
+        According to pydoc there are implicit *finders* for import"""
 
-    objects = [ ]
-    for element in ast.walk(ast_generator):
-        if element.__class__ == ast_object:
-            objects.append(element)
-    return objects
-
-def getModuleNames(objects):
-    """Finds the names of _ast.Import objects."""
-
-    module_list = [ ]
-    for element in objects:
-        for name in element.names:
-            module_list.append(name.name)
-    return module_list
-
-def testImport(module_list):
-    """Tries to import modules (via exec()), returns a dictionary of
-    values; k,v = {<module_name>: <boolean>}
-
-    According to pydoc there are implicit *finders* for import"""
-
-    module_check = {True: [], False: []}
-    for module in module_list:
-        if module not in module_check[True] or module_check[False]:
+        while len(self.ModuleNames) > 0:
+            module = self.ModuleNames.pop()
             try:
                 exec "import " + module
-                module_check[True].append(module)
+                self.ImportTest[True].append(module)
             except ImportError:
-                module_check[False].append(module)
-        else:
-            continue
-    return module_check
+                self.ImportTest[False].append(module)
+    
+    def Run(self):
+        self.Parse()
+        self.Filter()
+        self.Test()
 
-# Clean this up, it's getting to the point where an object would be
-# easier.  Each object could be responsible for a single python AST
-# (organized by file), all objects returning a dictionary like: 
-# {True: [], False: []}
-
-def main():
-    data = getAST(sys.argv[1])
-    imports = filterAST(data)
-    true_false = testImport(getModuleNames(imports))
-    print("\n".join(getModuleNames(imports)))
-    print(true_false[True], true_false[False])
-
-if __name__ == "__main__":
-    main()
+        return self.ImportTest
