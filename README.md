@@ -1,7 +1,7 @@
 Usage
 ----------
 
-    pykcy <pyton file(s)>
+    pykcy <python file(s)>
     _ast 		: Installed
     ast 		: Installed
     sys 		: Installed
