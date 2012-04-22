@@ -5,7 +5,7 @@ Usage
     _ast 		: Installed
     ast 		: Installed
     sys 		: Installed
-    os 		: Installed
+    test		: Missing
 
 
 Installation
