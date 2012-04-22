@@ -1,0 +1,29 @@
+#!/usr/bin/env python
+
+import argparse
+
+from pycky import pycky
+
+def main():
+   # Get command line args and options
+   parser = argparse.ArgumentParser(
+      description='pyck -- A python module dependency tester',
+      epilog='Written by Joseph Kern; jkern@semafour.net')
+   parser.add_argument('files', metavar='files', type=str, nargs='+',
+                       help='File(s) for analysis')
+   args = parser.parse_args()
+
+
+   # Meh ...
+   for item in args.files:
+      MyPyck = pycky.Pyck(item)
+      Results = MyPyck.Run()
+      print item
+      print("\n".join(["%s \t\t: Installed" % \
+                          line for line in Results[True]]))
+      print("\n".join(["%s \t\t: Missing" % \
+                          line for line in Results[False]]))
+
+if __name__ == "__main__":
+
+   main()

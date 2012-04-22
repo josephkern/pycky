@@ -11,8 +11,8 @@ def read(fname):
     return open(os.path.join(os.path.dirname(__file__), fname)).read()
 
 setup(
-    name = "pyck",
-    version = "0.1.0",
+    name = "pycky",
+    version = "0.1.2",
     author = "Joseph Kern",
     author_email = "jkern@semafour.net",
     description = ("Search for python module dependencies using the "
@@ -20,7 +20,7 @@ setup(
     license = "BSD",
     keywords = "AST analysis developer",
     url = "http://packages.python.org/pyck",
-    packages=['pyck', 'tests'],
+    packages=['pycky', 'tests'],
     long_description=read('README'),
     classifiers=[
         "Development Status :: 3 - Alpha",
@@ -28,6 +28,6 @@ setup(
         "License :: OSI Approved :: BSD License",
     ],
     scripts=[
-        'bin/pyck'
+        'bin/pycky'
         ],
 )
