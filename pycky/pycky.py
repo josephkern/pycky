@@ -1,26 +1,6 @@
 #!/usr/bin/env python
-"""Determines the dependencies of a python corpus using the internal
-AST(Abstract Source Tree) reference.
-
-This is much more accurate and less tiring than running:
-`grep -R import *` on a source directory.
-
-Usage:
-  pyck file.py
-  pyck [--all|-a] file.py 
-  pyck [--help|-h] >> "this usage"
-
+"""
 Written by Joseph Kern, 2011
-
-TODO: Upload to github
-TODO: Upload to pypi
-
-TODO: Add flag for --no-search
-TODO: Add try; except for internetaccess
-TODO: Add pypi search (url to search result)
-TODO: Add github search (url to search result)
-TODO: Add google search (as a fall back "python package <modulename>)
-
 """
 
 import os
