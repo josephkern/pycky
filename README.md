@@ -1,5 +1,4 @@
-
-Determines the dependencies of a python source files using the internal python
+Determines the dependencies of python source files using the internal python
 AST(Abstract Source Tree) rather than regular expressions.
 
 This is much more accurate and less tiring than running:
