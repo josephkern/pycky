@@ -8,7 +8,7 @@ This is much more accurate and less tiring than running:
 Usage
 ----------
 
-    pykcy <python file(s)>
+    pycky <python file(s)>
     _ast 		: Installed
     ast 		: Installed
     sys 		: Installed
