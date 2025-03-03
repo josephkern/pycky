@@ -14,7 +14,7 @@ setup(
     name = "pycky",
     version = "0.1.2",
     author = "Joseph Kern",
-    author_email = "jkern@semafour.net",
+    author_email = "no@reply.com",
     description = ("Search for python module dependencies using the "
                                    "Abstract Source Tree (AST)"),
     license = "BSD",
