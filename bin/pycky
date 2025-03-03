@@ -8,7 +8,7 @@ def main():
    # Get command line args and options
    parser = argparse.ArgumentParser(
       description='pycky -- A python module dependency tester',
-      epilog='Written by Joseph Kern; jkern@semafour.net')
+      epilog='Written by Joseph Kern')
    parser.add_argument('files', metavar='files', type=str, nargs='+',
                        help='File(s) for analysis')
    args = parser.parse_args()
