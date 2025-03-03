@@ -7,7 +7,7 @@ from pycky import pycky
 def main():
    # Get command line args and options
    parser = argparse.ArgumentParser(
-      description='pyck -- A python module dependency tester',
+      description='pycky -- A python module dependency tester',
       epilog='Written by Joseph Kern; jkern@semafour.net')
    parser.add_argument('files', metavar='files', type=str, nargs='+',
                        help='File(s) for analysis')
